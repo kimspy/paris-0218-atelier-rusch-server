@@ -3,8 +3,8 @@ const fs = require('fs')
 const util = require('util')
 const path = require('path')
 const app = express()
+
 // const db = require('./db')
-// const articles = require('./mocks/articles.json')
 const readFile = util.promisify(fs.readFile)
 const filePath = path.join(__dirname, './mocks/articles.json')
 
@@ -17,16 +17,14 @@ app.use((request, response, next) => {
 })
 
 app.get('/article', (request, response, next) => {
+  // db.getArticles()
+  //   .then(articles => response.json(articles))
   readFile(filePath, 'utf8')
   .then(data => {
     const articles = JSON.parse(data)
     response.json(articles)
   })
   .catch(next)
-
-  // readFile(filePath, 'utf8')
-  //   .then(JSON.parse)
-  //   .then(article => response.json(article))
 })
 
 app.listen(3003, () => console.log('Oh oui, je suis connecté au port 3003!!! YEAH!!! C\'est tellement bon!! C\'est une expérience incomparable!!'))
